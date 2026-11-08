@@ -1,0 +1,404 @@
+/* ===================================================
+   THÈMES
+   "doux"  : noir et rose, ambiance cute
+   "sport" : noir et rouge, plus puissant et anguleux
+   Chaque thème définit des variables (--nom) utilisées plus bas.
+   =================================================== */
+:root[data-theme="doux"] {
+  --fond: #1a1216;
+  --lueur1: rgba(244, 143, 177, 0.28);
+  --lueur2: rgba(194, 24, 91, 0.22);
+  --carte: rgba(42, 27, 35, 0.88);
+  --champ: #2e1d27;
+  --texte: #fbeaf1;
+  --texte-doux: #d9b3c5;
+  --principal: #f48fb1;
+  --principal2: #ff6fa5;
+  --principal-texte: #2a0f1b;
+  --bordure: #5a3345;
+
+  /* Formes et typographie */
+  --rayon: 22px;
+  --rayon-champ: 16px;
+  --rayon-bouton: 999px;
+  --police-titre: "Pacifico", cursive;
+  --taille-titre: clamp(2.6rem, 10vw, 4.8rem);
+  --casse: none;
+  --espacement: 0;
+  --inclinaison: none;
+  --style-avert: dashed;
+  --rotation-avert: -0.8deg;
+
+  /* Emojis des stickers */
+  --st1: "🎀"; --st2: "💪"; --st3: "✨"; --st4: "🏋️‍♀️"; --st5: "💗";
+  --ico-avert: "💗";
+
+  /* Motif de petits cœurs répété en fond */
+  --motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cpath d='M45 60 C28 47 26 36 35 32 C41 30 45 34 45 34 C45 34 49 30 55 32 C64 36 62 47 45 60Z' fill='%23f48fb1' fill-opacity='0.08'/%3E%3Ccircle cx='12' cy='14' r='2' fill='%23f48fb1' fill-opacity='0.12'/%3E%3Ccircle cx='76' cy='74' r='2' fill='%23f48fb1' fill-opacity='0.12'/%3E%3C/svg%3E");
+}
+
+:root[data-theme="sport"] {
+  --fond: #09090b;
+  --lueur1: rgba(230, 57, 70, 0.30);
+  --lueur2: rgba(255, 45, 45, 0.14);
+  --carte: rgba(22, 22, 26, 0.92);
+  --champ: #1a1a1f;
+  --texte: #f4f4f5;
+  --texte-doux: #a8a8b3;
+  --principal: #e63946;
+  --principal2: #ff4d4d;
+  --principal-texte: #ffffff;
+  --bordure: #34343c;
+
+  --rayon: 8px;
+  --rayon-champ: 6px;
+  --rayon-bouton: 4px;
+  --police-titre: "Bebas Neue", Impact, sans-serif;
+  --taille-titre: clamp(3.2rem, 13vw, 6rem);
+  --casse: uppercase;
+  --espacement: 0.08em;
+  --inclinaison: skewX(-8deg);
+  --style-avert: solid;
+  --rotation-avert: 0deg;
+
+  --st1: "🔥"; --st2: "💪"; --st3: "⚡"; --st4: "🏋️"; --st5: "🥇";
+  --ico-avert: "⚠️";
+
+  /* Motif de rayures diagonales façon fibre de carbone */
+  --motif: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 14px);
+}
+
+/* ===================================================
+   BASE
+   =================================================== */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--texte);
+  line-height: 1.5;
+  background-color: var(--fond);
+  background-image:
+    radial-gradient(circle at 15% 10%, var(--lueur1), transparent 45%),
+    radial-gradient(circle at 85% 90%, var(--lueur2), transparent 45%),
+    var(--motif);
+  background-attachment: fixed;
+}
+
+/* ===================================================
+   LE PETIT POINT (changement de thème)
+   =================================================== */
+#btn-theme {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid var(--texte);
+  background: var(--principal);
+  box-shadow: 0 0 12px var(--principal);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#btn-theme:hover { transform: scale(1.3); }
+
+/* ===================================================
+   EN-TÊTE : grand titre centré + stickers
+   =================================================== */
+.entete {
+  position: relative;
+  text-align: center;
+  padding: 56px 20px 24px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 400;
+  font-size: var(--taille-titre);
+  line-height: 1.1;
+  text-transform: var(--casse);
+  letter-spacing: var(--espacement);
+  transform: var(--inclinaison);
+  background: linear-gradient(135deg, var(--principal), var(--principal2), #ffffff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 14px var(--lueur1));
+}
+
+.citation {
+  margin: 12px 0 0;
+  color: var(--texte-doux);
+  font-size: 1rem;
+  min-height: 1.5em;
+}
+
+/* Stickers : les emojis viennent des variables du thème */
+.sticker {
+  position: absolute;
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  animation: flotter 4s ease-in-out infinite;
+  user-select: none;
+}
+
+.s1::before { content: var(--st1); }
+.s2::before { content: var(--st2); }
+.s3::before { content: var(--st3); }
+.s4::before { content: var(--st4); }
+.s5::before { content: var(--st5); }
+
+.s1 { top: 28px;   left: 6%;  transform: rotate(-15deg); }
+.s2 { top: 40px;   right: 7%; animation-delay: 0.6s; }
+.s3 { top: 6px;    left: 38%; font-size: 1.4rem; animation-delay: 1.1s; }
+.s4 { bottom: 4px; left: 12%; animation-delay: 1.6s; }
+.s5 { bottom: 10px; right: 13%; animation-delay: 2.2s; }
+
+@keyframes flotter {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticker { animation: none; }
+}
+
+/* ===================================================
+   CONTENU
+   =================================================== */
+main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 8px 20px 40px;
+}
+
+.avertissement {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding: 16px 18px;
+  border: 2px var(--style-avert) var(--principal);
+  border-left-width: 6px;
+  border-radius: var(--rayon-champ);
+  background: linear-gradient(135deg, var(--carte), var(--champ));
+  transform: rotate(var(--rotation-avert));
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.avert-icone { font-size: 1.8rem; }
+.avert-icone::before { content: var(--ico-avert); }
+.avertissement strong { color: var(--principal); text-transform: var(--casse); letter-spacing: var(--espacement); }
+.avertissement p { margin: 4px 0 0; font-size: 0.9rem; color: var(--texte-doux); }
+
+.carte {
+  background: var(--carte);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+}
+
+h2 { margin: 0 0 4px; font-size: 1.5rem; }
+h3 { margin: 20px 0 8px; color: var(--principal); }
+.sous-titre { margin: 0 0 20px; color: var(--texte-doux); font-size: 0.95rem; }
+
+/* ===================================================
+   FORMULAIRE
+   =================================================== */
+form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--texte);
+}
+
+input, select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--bordure);
+  border-radius: var(--rayon-champ);
+  background: var(--champ);
+  color: var(--texte);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+input::placeholder { color: var(--texte-doux); opacity: 0.6; }
+input:hover, select:hover { border-color: var(--principal); }
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--principal2);
+  box-shadow: 0 0 0 4px var(--lueur1);
+  transform: translateY(-1px);
+}
+
+/* ----- Objectifs en plus ----- */
+.bloc-objectifs, .erreur, .btn-calculer { grid-column: 1 / -1; }
+
+.titre-bloc { margin: 0 0 10px; font-weight: 600; }
+
+.puces { display: flex; flex-wrap: wrap; gap: 8px; }
+.choisis { margin-top: 12px; }
+
+.puce {
+  padding: 7px 14px;
+  border: 2px solid var(--bordure);
+  border-radius: 999px;
+  background: var(--champ);
+  color: var(--texte);
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.puce:hover { border-color: var(--principal); transform: translateY(-2px); }
+
+.puce.actif {
+  background: var(--principal);
+  border-color: var(--principal);
+  color: var(--principal-texte);
+  font-weight: 600;
+}
+
+.puce.choisie {
+  background: linear-gradient(135deg, var(--principal), var(--principal2));
+  border-color: transparent;
+  color: var(--principal-texte);
+  font-weight: 600;
+  cursor: default;
+}
+
+.puce.choisie:hover { transform: none; }
+
+.retirer {
+  margin-left: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.retirer:hover { opacity: 1; }
+
+.ajout-perso {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.btn-ajout {
+  padding: 0 18px;
+  border: none;
+  border-radius: var(--rayon-champ);
+  background: var(--principal);
+  color: var(--principal-texte);
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-ajout:hover { transform: translateY(-2px); }
+
+/* ----- Erreur et bouton principal ----- */
+.erreur { margin: 0; min-height: 1.2em; color: #ff8a8a; font-weight: 600; }
+
+.btn-calculer {
+  padding: 14px 20px;
+  border: none;
+  border-radius: var(--rayon-bouton);
+  background: linear-gradient(135deg, var(--principal), var(--principal2));
+  color: var(--principal-texte);
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: var(--casse);
+  letter-spacing: var(--espacement);
+  cursor: pointer;
+  box-shadow: 0 8px 20px var(--lueur1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-calculer:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px var(--lueur1);
+}
+
+/* ===================================================
+   RÉSULTATS
+   =================================================== */
+.liste-resultats {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.liste-resultats li {
+  padding: 12px 16px;
+  border-radius: var(--rayon-champ);
+  background: var(--champ);
+  border-left: 4px solid var(--principal);
+}
+
+.liste-resultats strong { color: var(--principal); }
+.note { font-size: 0.9rem; color: var(--texte-doux); }
+
+.pied {
+  text-align: center;
+  color: var(--texte-doux);
+  font-family: var(--police-titre);
+  font-size: 1.3rem;
+  text-transform: var(--casse);
+  letter-spacing: var(--espacement);
+}
+
+.pied-ico::before { content: var(--st5); }
+
+/* ----- Cartes de conseils ----- */
+.conseil {
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  border-radius: var(--rayon-champ);
+  background: var(--champ);
+  border-left: 4px solid var(--principal);
+}
+
+.conseil h4 { margin: 0 0 8px; color: var(--principal); font-size: 1rem; }
+
+.liste-conseils {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.92rem;
+}
+
+.liste-conseils li { margin-bottom: 6px; }
+
+#res-ajustement:empty { display: none; }
+
+.cache { display: none; }

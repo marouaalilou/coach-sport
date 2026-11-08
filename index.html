@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="doux">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coach Sport – Version 1</title>
+  <!-- Polices (nécessitent internet) : Pacifico et Bebas Neue pour les titres, Poppins pour le reste -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Pacifico&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Le petit point en haut à droite change le thème -->
+  <button id="btn-theme" type="button" title="Changer de thème" aria-label="Changer de thème"></button>
+
+  <header class="entete">
+    <!-- Stickers décoratifs (les emojis changent selon le thème, voir style.css) -->
+    <span class="sticker s1" aria-hidden="true"></span>
+    <span class="sticker s2" aria-hidden="true"></span>
+    <span class="sticker s3" aria-hidden="true"></span>
+    <span class="sticker s4" aria-hidden="true"></span>
+    <span class="sticker s5" aria-hidden="true"></span>
+
+    <h1>Mon Coach Sport</h1>
+    <p id="citation" class="citation"></p>
+  </header>
+
+  <main>
+    <aside class="avertissement">
+      <span class="avert-icone" aria-hidden="true"></span>
+      <div>
+        <strong>Petit rappel important</strong>
+        <p>
+          Je te donne des estimations générales, pas un avis médical.
+          Si tu as une maladie ou un doute, parle d'abord à ton médecin.
+          Prends soin de toi avant tout !
+        </p>
+      </div>
+    </aside>
+
+    <section class="carte">
+      <h2>✨ Ton profil</h2>
+      <p class="sous-titre">Dis-moi tout, je prépare ton plan sur mesure.</p>
+
+      <form id="form-profil" novalidate>
+        <label>🌸 Prénom
+          <input type="text" id="prenom" maxlength="30" placeholder="Ton prénom" required>
+        </label>
+
+        <label>💫 Genre
+          <select id="genre" required>
+            <option value="">Choisir…</option>
+            <option value="femme">Femme</option>
+            <option value="homme">Homme</option>
+          </select>
+        </label>
+
+        <label>🎂 Âge (ans)
+          <input type="number" id="age" min="10" max="100" placeholder="ex : 20" required>
+        </label>
+
+        <label>⚖️ Poids (kg)
+          <input type="number" id="poids" min="25" max="300" step="0.1" placeholder="ex : 60" required>
+        </label>
+
+        <label>📏 Taille (cm)
+          <input type="number" id="taille" min="100" max="250" placeholder="ex : 165" required>
+        </label>
+
+        <label>🏋️ Niveau sportif
+          <select id="niveau" required>
+            <option value="">Choisir…</option>
+            <option value="debutant">Débutant</option>
+            <option value="intermediaire">Intermédiaire</option>
+            <option value="avance">Avancé</option>
+          </select>
+        </label>
+
+        <label>🔥 Activité au quotidien
+          <select id="activite" required>
+            <option value="">Choisir…</option>
+            <option value="1.2">Sédentaire (peu de mouvement)</option>
+            <option value="1.375">Légère (1 à 3 séances par semaine)</option>
+            <option value="1.55">Modérée (3 à 5 séances par semaine)</option>
+            <option value="1.725">Intense (6 à 7 séances par semaine)</option>
+          </select>
+        </label>
+
+        <label>🎯 Objectif principal
+          <select id="objectif" required>
+            <option value="">Choisir…</option>
+            <option value="perdre">Perdre du poids</option>
+            <option value="maintenir">Maintenir mon poids</option>
+            <option value="prendre">Prendre de la masse</option>
+          </select>
+        </label>
+
+        <!-- Objectifs en plus : on choisit des idées ou on écrit les siens -->
+        <div class="bloc-objectifs">
+          <p class="titre-bloc">➕ Objectifs en plus (facultatif)</p>
+          <div id="objectifs-suggeres" class="puces"></div>
+
+          <div class="ajout-perso">
+            <input type="text" id="objectif-perso" maxlength="40" placeholder="Écris ton propre objectif…">
+            <button type="button" id="btn-ajout-objectif" class="btn-ajout">Ajouter</button>
+          </div>
+
+          <div id="objectifs-choisis" class="puces choisis"></div>
+        </div>
+
+        <p id="message-erreur" class="erreur" role="alert"></p>
+        <button type="submit" class="btn-calculer">Calculer mon plan ✨</button>
+      </form>
+    </section>
+
+    <section id="resultats" class="carte cache">
+      <h2 id="titre-resultats">Résultats</h2>
+      <ul class="liste-resultats">
+        <li>📊 IMC : <strong id="res-imc"></strong> <span id="res-imc-cat"></span></li>
+        <li>🔋 Métabolisme de base : <strong id="res-bmr"></strong> kcal/jour</li>
+        <li>🏃 Dépense quotidienne estimée : <strong id="res-tdee"></strong> kcal/jour</li>
+        <li>🎯 Objectif calorique : <strong id="res-cible"></strong> kcal/jour</li>
+        <li id="res-ajustement"></li>
+      </ul>
+
+      <h3>🍽️ Répartition indicative</h3>
+      <ul class="liste-resultats">
+        <li>🥚 Protéines : <strong id="res-prot"></strong> g</li>
+        <li>🍚 Glucides : <strong id="res-gluc"></strong> g</li>
+        <li>🥑 Lipides : <strong id="res-lip"></strong> g</li>
+      </ul>
+
+      <div id="bloc-conseils-principal" class="cache">
+        <h3 id="titre-conseils-principal"></h3>
+        <div id="res-conseils-principal" class="conseil"></div>
+      </div>
+
+      <div id="bloc-poids">
+        <h3>🏁 Ton poids de référence</h3>
+        <ul class="liste-resultats">
+          <li>✅ Fourchette santé pour ta taille : <strong id="res-fourchette"></strong></li>
+          <li>⭐ Poids de référence : <strong id="res-reference"></strong></li>
+        </ul>
+        <p id="res-poids-note" class="note"></p>
+      </div>
+
+      <div id="bloc-autres" class="cache">
+        <h3>➕ Tes objectifs en plus : mes conseils</h3>
+        <div id="res-autres"></div>
+      </div>
+
+      <p id="res-note" class="note"></p>
+    </section>
+
+    <p class="pied">Un pas à la fois <span class="pied-ico" aria-hidden="true"></span></p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
