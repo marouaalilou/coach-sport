@@ -58,10 +58,10 @@ Une version à la fois : chaque version doit marcher avant de passer à la suiva
 - [x] Deux thèmes et sauvegarde locale
 
 ### 🔜 Version 2 : programmes d'entraînement
-- [ ] Programmes écrits à l'avance (débutant, intermédiaire, avancé), à 3 jours par semaine pour commencer
-- [ ] Exercices stockés dans un tableau d'objets (nom, séries, répétitions, repos)
-- [ ] Choix automatique du programme selon le niveau et les objectifs
-- [ ] Affichage par jour avec cases à cocher
+- [x] Programmes écrits à l'avance (débutant, intermédiaire, avancé), à 3 jours par semaine pour commencer
+- [x] Exercices stockés dans un tableau d'objets (nom, séries, répétitions, repos)
+- [x] Choix automatique du programme selon le niveau et les objectifs
+- [x] Affichage par jour avec cases à cocher
 
 ### 📅 Version 3 : suivi
 - [ ] Carnet de séances (date, exercice, séries, répétitions, poids soulevé)
